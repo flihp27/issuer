@@ -5,7 +5,6 @@ export AGENT_ENDPOINT="http://localhost:8000"
 export WALLET_KEY="Xaff17iH1MNc"
 export ADMIN_API_KEY="secret"
 
-# export GENESIS="http://greenlight.bcovrin.vonx.io/genesis"
 export GENESIS="http://vonx.pocquebec.org:9000/genesis"
 
 export AGENT_INBOUND_PORT=8000
