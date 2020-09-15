@@ -9,112 +9,22 @@ networks:
 services:
   # Agents
 
-  agency:
-    build:
-      context: ../aries-cloudagency
-      dockerfile: Dockerfile
-      args:
-        - AGENCY_ENDPOINT=http://173.17.0.104
-        - AGENCY_ADMIN_API_KEY=secret
-#         - GENESIS_URL=http://greenlight.bcovrin.vonx.io/genesis
-        - GENESIS_URL=http://vonx.pocquebec.org:9000/genesis
-        - AGENCY_INBOUND_PORT=7500
-        - AGENCY_ADMIN_PORT=2500
-    ports:
-      - 2500:2500
-      - 7500:7500
-    networks:
-      services:
-        ipv4_address: 173.17.0.104
-
   issuer:
     build:
       context: .
-      dockerfile: issuer/Dockerfile
+      dockerfile: Dockerfile
       args:
         - ISSUER_SEED=000000000000000000000000Trustee1
         - ISSUER_AGENT_ENDPOINT=http://173.17.0.100:8000
         - ISSUER_WALLET_KEY=Xaff17iH1MNc
         - ISSUER_ADMIN_API_KEY=secret
         - ISSUER_HOSTNAME=173.17.0.100
-#         - GENESIS_URL=http://greenlight.bcovrin.vonx.io/genesis        
         - GENESIS_URL=http://vonx.pocquebec.org:9000/genesis
         - INBOUND_PORT=8000
         - API_PORT=3000
     ports:
       - 3000:3000
       - 8000:8000
-    depends_on:
-      - agency
     networks:
       services:
         ipv4_address: 173.17.0.100
-
-  verifier:
-    build:
-      context: .
-      dockerfile: verifier/Dockerfile
-      args:
-        - VERIFIER_SEED=00000000000000000000000000000006
-        - VERIFIER_AGENT_ENDPOINT=http://173.17.0.101:9000
-        - VERIFIER_WALLET_KEY=5UVlxFfX041L
-        - VERIFIER_ADMIN_API_KEY=secret
-        - ISSUER_HOSTNAME=173.17.0.101
-#         - GENESIS_URL=http://greenlight.bcovrin.vonx.io/genesis        
-        - GENESIS_URL=http://vonx.pocquebec.org:9000/genesis
-        - INBOUND_PORT=9000
-        - API_PORT=4000
-    ports:
-      - 4000:4000
-      - 9000:9000
-    depends_on:
-      - agency
-    networks:
-      services:
-        ipv4_address: 173.17.0.101
-
-  prover:
-    build:
-      context: .
-      dockerfile: prover/Dockerfile
-      args:
-        - PROVER_SEED=00000000000000000000000000000002
-        - PROVER_AGENT_ENDPOINT=http://173.17.0.102:7000
-        - PROVER_WALLET_KEY=7hflfbfX371f
-        - PROVER_ADMIN_API_KEY=secret
-        - PROVER_HOSTNAME=173.17.0.102
-#         - GENESIS_URL=http://greenlight.bcovrin.vonx.io/genesis        
-        - GENESIS_URL=http://vonx.pocquebec.org:9000/genesis
-        - INBOUND_PORT=7000
-        - API_PORT=5000
-    ports:
-      - 5000:5000
-      - 7000:7000
-    depends_on:
-      - agency
-    networks:
-      services:
-        ipv4_address: 173.17.0.102
-
-  accreditor:
-    build:
-      context: .
-      dockerfile: accreditor/Dockerfile
-      args:
-        - ACCREDITOR_SEED=00000000000000000000000000000003
-        - ACCREDITOR_AGENT_ENDPOINT=http://173.17.0.103:6000
-        - ACCREDITOR_WALLET_KEY=8gxl6FgXh4sp
-        - ACCREDITOR_ADMIN_API_KEY=secret
-        - ACCREDITOR_HOSTNAME=173.17.0.103
-#         - GENESIS_URL=http://greenlight.bcovrin.vonx.io/genesis        
-        - GENESIS_URL=http://vonx.pocquebec.org:9000/genesis
-        - INBOUND_PORT=6000
-        - API_PORT=2000
-    ports:
-      - 2000:2000
-      - 6000:6000
-    depends_on:
-      - agency
-    networks:
-      services:
-        ipv4_address: 173.17.0.103
